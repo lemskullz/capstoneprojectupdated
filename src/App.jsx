@@ -1,27 +1,75 @@
-import { useState } from 'react';
-import { Routes, Route } from "react-router-dom";
-import Login from "./Pages/Login"
-import Register from "./Pages/Register"
-import Products from './Pages/Products';
-import Cart from './Pages/Cart';
-import NavBar from './components/Navbar';
-import SingleProduct from './Pages/SingleProduct';
+import React, { useEffect, useState } from "react";
+import Header from "./components/header/Header";
+import Search from "./components/search/Search";
+import AddProducts from "./components/addproducts/AddProducts";
+import CardBody from "./components/cards/CardBody";
+import Button from "./components/button/Button";
 
+import "./App.css";
+const App = () => {
+  const [items, setItem] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [addedItems, setAddedItem] = useState([]);
+  const [showAddProducts, setShowAddProducts] = useState(false);
 
-function App() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products/")
+      .then((res) => res.json())
+      .then((data) => setItem(data));
+    console.count("hi");
+  }, []);
+  function changingSrarchData(e) {
+    setSearchValue(e.target.value);
+  }
+  const itmesFilter = items.filter((item) =>
+    item.title.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  function addItem(item) {
+    item.addNumber = 1;
+    const itemArr = addedItems;
+    setAddedItem([...itemArr, item]);
+  }
+  // console.log(addedItems);
+  function removeItem(item) {
+    const newItems = addedItems.filter((addedItem) => addedItem.id !== item.id);
+    setAddedItem(newItems);
+    // console.log(addedItems);
+  }
   return (
     <div>
-      <NavBar token={token} setToken={setToken} />
-      <Routes>
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route path="/register" element={<Register setToken={setToken} />} />
-        <Route path="/products" element={<Products token={token} />} />
-        <Route path="/cart" element={<Cart token={token} />} />
-        <Route path="/products/:id" element={<SingleProduct token={token} />} />
-      </Routes>
-    </div>
-  )
-}
+      {/* <Header /> */}
 
-export default App
+      <div className="body__container">
+        <div className="nav">
+          <Header />
+          <div className="nav-right">
+            <Search
+              products={items}
+              value={searchValue}
+              onChangeData={changingSrarchData}
+            />
+            <Button num={addedItems.length} click={setShowAddProducts} />
+          </div>
+        </div>
+
+        {showAddProducts && (
+          <AddProducts
+            click={setShowAddProducts}
+            items={addedItems}
+            removeItem={removeItem}
+            setAddedItem={setAddedItem}
+          />
+        )}
+        <CardBody
+          products={itmesFilter}
+          addItem={addItem}
+          removeItem={removeItem}
+          addedItems={addedItems}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default App;
