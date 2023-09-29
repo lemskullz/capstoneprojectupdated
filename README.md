@@ -1,5 +1,8 @@
 capstone project
+e-commerce website
 # React + Vite
+# npm run install in terminal
+#npm run dev to start server
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
