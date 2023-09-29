@@ -1,9 +1,11 @@
 website link- https://animated-gelato-9c26fd.netlify.app/
 capstone project
 e-commerce website
+usaers can view and add items to cart for checkout and also search for products available 
 # React + Vite
 # npm run install in terminal
 #npm run dev to start server
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
