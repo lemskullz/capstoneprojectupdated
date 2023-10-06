@@ -1,75 +1,52 @@
-import React, { useEffect, useState } from "react";
-import Header from "./components/header/Header";
-import Search from "./components/search/Search";
-import AddProducts from "./components/addproducts/AddProducts";
-import CardBody from "./components/cards/CardBody";
-import Button from "./components/button/Button";
+import {useState} from 'react'
+import Products from "./Components/Products/Products.jsx"
+import Login from "./Components/Login/Login.jsx"
+import {Routes, Route} from "react-router-dom"
+import Navbar from "./Components/Navbar/Navbar.jsx"
+import Header from "./Components/header/Header.jsx";
+import Search from "./Components/search/Search";
+import Button from "./Components/button/Button";
+import './App.css'
 
-import "./App.css";
-const App = () => {
+function App() {
   const [items, setItem] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [addedItems, setAddedItem] = useState([]);
   const [showAddProducts, setShowAddProducts] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('token'))
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products/")
-      .then((res) => res.json())
-      .then((data) => setItem(data));
-    console.count("hi");
-  }, []);
-  function changingSrarchData(e) {
+  function changingSearchData(e) {
     setSearchValue(e.target.value);
   }
-  const itmesFilter = items.filter((item) =>
-    item.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
 
-  function addItem(item) {
-    item.addNumber = 1;
-    const itemArr = addedItems;
-    setAddedItem([...itemArr, item]);
-  }
-  // console.log(addedItems);
-  function removeItem(item) {
-    const newItems = addedItems.filter((addedItem) => addedItem.id !== item.id);
-    setAddedItem(newItems);
-    // console.log(addedItems);
-  }
   return (
     <div>
-      {/* <Header /> */}
-
-      <div className="body__container">
-        <div className="nav">
+      <div className="nav">
           <Header />
           <div className="nav-right">
             <Search
               products={items}
               value={searchValue}
-              onChangeData={changingSrarchData}
+              onChangeData={changingSearchData}
             />
             <Button num={addedItems.length} click={setShowAddProducts} />
           </div>
         </div>
-
-        {showAddProducts && (
-          <AddProducts
-            click={setShowAddProducts}
-            items={addedItems}
-            removeItem={removeItem}
-            setAddedItem={setAddedItem}
-          />
-        )}
-        <CardBody
-          products={itmesFilter}
-          addItem={addItem}
-          removeItem={removeItem}
+      <Routes>
+        <Route path="/home" element={<Products 
+          items={items} 
+          searchValue={searchValue} 
+          setItem={setItem} 
+          setSearchValue={setSearchValue}
           addedItems={addedItems}
-        />
-      </div>
+          setAddedItem={setAddedItem}
+          showAddProducts={showAddProducts}
+          setShowAddProducts={setShowAddProducts}
+        />} />
+        <Route path="/login" element={< Login />} />
+       </Routes>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
