@@ -1,8 +1,9 @@
-website link- https://animated-gelato-9c26fd.netlify.app/
+website link- https://gleaming-pastelito-1ac590.netlify.app
 capstone project
 e-commerce website
 usaers can view and add items to cart for checkout and also search for products available
 users can also cancel products in cart
+users can log in and out with password provided in the submission comments
 # React + Vite
 # npm run install in terminal
 #npm run dev to start server
