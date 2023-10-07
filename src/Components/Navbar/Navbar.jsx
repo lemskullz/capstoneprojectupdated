@@ -6,20 +6,25 @@ export default function Navbar({ token, setToken }) {
     function handleLogout() {
         localStorage.removeItem("token");
         setToken(null);
-        navigate("/")
+        // navigate("/")
     }
     return (
         <div className="navbar">
             <div className="links">
-             <Link onClick={handleClick} to="/">
+             <Link to="/">
                 {" "}
                 Home{" "}
                 </Link>
-                <Link onClick={handleclick} to="/login">
+                {
+                token ?
+                <Link onClick={handleLogout} to="/">Logout</Link>
+                :
+                <Link to="/login">
                     {" "}
                     Login{" "}
                 </Link>
 
+            }
         </div>
         </div>
     );

@@ -22,7 +22,7 @@ function App() {
   return (
     <div>
       <div className="nav">
-          <Header />
+          <Header token={token} setToken={setToken}/>
           <div className="nav-right">
             <Search
               products={items}
@@ -33,7 +33,7 @@ function App() {
           </div>
         </div>
       <Routes>
-        <Route path="/home" element={<Products 
+        <Route path="/" element={<Products 
           items={items} 
           searchValue={searchValue} 
           setItem={setItem} 
@@ -43,7 +43,7 @@ function App() {
           showAddProducts={showAddProducts}
           setShowAddProducts={setShowAddProducts}
         />} />
-        <Route path="/login" element={< Login />} />
+        <Route path="/login" element={< Login token={token} setToken={setToken} />} />
        </Routes>
     </div>
   )

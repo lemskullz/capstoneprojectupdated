@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
 
@@ -5,6 +6,7 @@ export default function Login({ setToken }) {
     // const [token, setToken] = useState(localStorage.getItem('token'))
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate();
     const handleSubmit = async (e) => { 
         
         e.preventDefault() 
@@ -23,6 +25,7 @@ export default function Login({ setToken }) {
     console.log(response)
     localStorage.setItem("token", response.token);
    setToken(response.token)
+   navigate("/")
     }
     return (
         <>
